@@ -45,6 +45,6 @@ RUN git config --global user.email "fred.drake@gmail.com" \
 ADD https://api.github.com/repos/fred-drake/nvim-env/branches/master /tmp/version.json
 RUN git clone --depth 1 https://github.com/fred-drake/nvim-env.git nvim
 
-COPY nvim-init.sh ~/nvim-init.sh
-RUN ~/nvim-init.sh
+COPY nvim-init.sh /root/nvim-init.sh
+RUN /root/nvim-init.sh
 WORKDIR /workspace

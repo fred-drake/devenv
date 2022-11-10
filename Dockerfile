@@ -9,15 +9,6 @@ RUN git clone --branch stable --depth 1 https://github.com/neovim/neovim \
     && make -C neovim install \
     && rm -rf neovim
 
-FROM ubuntu:jammy as tree-sitter
-WORKDIR /work
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -qq -y wget gcc \
-    && rm -rf /var/lib/apt/lists/*
-RUN wget -O installer https://sh.rustup.rs \
-    && chmod 755 installer \
-    && ./installer -y
-RUN /root/.cargo/bin/cargo install tree-sitter-cli
-
 FROM ubuntu:jammy
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -qq -y git gcc fzf ripgrep \
     tree xclip python3 python3-pip nodejs npm curl fzf ripgrep tzdata ninja-build gettext libtool \
@@ -31,9 +22,6 @@ COPY --from=neovim /usr/local/lib/nvim/ /usr/local/lib/nvim/
 COPY --from=neovim /usr/local/share/nvim/ /usr/local/share/nvim/
 COPY --from=neovim /usr/local/share/applications/nvim.desktop /usr/local/share/applications/nvim.desktop
 COPY --from=neovim /usr/local/share/icons/hicolor/128x128/apps/nvim.png /usr/local/share/icons/hicolor/128x128/apps/nvim.png
-
-# Import Tree Sitter CLI -- needed by plugin
-# COPY --from=tree-sitter /root/.cargo/bin/tree-sitter /usr/local/bin/tree-sitter
 
 WORKDIR /root/.config
 RUN git clone --depth 1 https://github.com/wbthomason/packer.nvim \

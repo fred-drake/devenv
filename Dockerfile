@@ -38,10 +38,13 @@ COPY --from=neovim /usr/local/share/icons/hicolor/128x128/apps/nvim.png /usr/loc
 WORKDIR /root/.config
 RUN git clone --depth 1 https://github.com/wbthomason/packer.nvim \
     ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+RUN git config --global user.email "fred.drake@gmail.com" \
+  && git config --global user.name "Fred Drake"
 
 # Bust cache if nvim env has changed
 ADD https://api.github.com/repos/fred-drake/nvim-env/branches/master /tmp/version.json
 RUN git clone --depth 1 https://github.com/fred-drake/nvim-env.git nvim
 
-COPY nvim-init.sh /tmp/nvim-init.sh
-RUN /tmp/nvim-init.sh
+COPY nvim-init.sh ~/nvim-init.sh
+RUN ~/nvim-init.sh
+WORKDIR /workspace

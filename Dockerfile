@@ -33,7 +33,7 @@ COPY --from=neovim /usr/local/share/applications/nvim.desktop /usr/local/share/a
 COPY --from=neovim /usr/local/share/icons/hicolor/128x128/apps/nvim.png /usr/local/share/icons/hicolor/128x128/apps/nvim.png
 
 # Import Tree Sitter CLI -- needed by plugin
-COPY --from=tree-sitter /root/.cargo/bin/tree-sitter /usr/local/bin/tree-sitter
+# COPY --from=tree-sitter /root/.cargo/bin/tree-sitter /usr/local/bin/tree-sitter
 
 WORKDIR /root/.config
 RUN git clone --depth 1 https://github.com/wbthomason/packer.nvim \

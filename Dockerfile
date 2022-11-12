@@ -3,7 +3,7 @@ FROM ghcr.io/fred-drake/neovim:latest as neovim
 FROM ubuntu:jammy
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -qq -y git gcc fzf ripgrep \
     tree xclip python3 python3-pip nodejs npm curl fzf ripgrep tzdata ninja-build gettext libtool \
-    libtool-bin autoconf automake cmake g++ pkg-config zip unzip tmux \
+    libtool-bin autoconf automake cmake g++ pkg-config zip unzip tmux zsh git-core curl fonts-powerline \
     && rm -rf /var/lib/apt/lists/*
 
 # Import Neovim 

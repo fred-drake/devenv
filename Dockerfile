@@ -1,18 +1,9 @@
-FROM ubuntu:jammy as neovim
-WORKDIR /work
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -qq -y curl git nodejs python3 \
-    python3-pip fzf ripgrep tree npm tzdata ninja-build gettext libtool libtool-bin autoconf automake \
-    cmake g++ pkg-config zip unzip \
-    && rm -rf /var/lib/apt/lists/*
-RUN git clone --branch stable --depth 1 https://github.com/neovim/neovim \
-    && make -C neovim -j4 \
-    && make -C neovim install \
-    && rm -rf neovim
+FROM ghcr.io/fred-drake/neovim:latest as neovim
 
 FROM ubuntu:jammy
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -qq -y git gcc fzf ripgrep \
     tree xclip python3 python3-pip nodejs npm curl fzf ripgrep tzdata ninja-build gettext libtool \
-    libtool-bin autoconf automake cmake g++ pkg-config zip unzip \
+    libtool-bin autoconf automake cmake g++ pkg-config zip unzip tmux \
     && rm -rf /var/lib/apt/lists/*
 
 # Import Neovim 
